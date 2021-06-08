@@ -16,3 +16,8 @@
 """
 
 mac = "AAAA:BBBB:CCCC"
+
+f="0x"+mac.split(":")[0]
+s="0x"+mac.split(":")[1]
+t="0x"+mac.split(":")[2]
+'{:b}{:b}{:b}'.format(int(f,16),int(s,16),int(t,16))
