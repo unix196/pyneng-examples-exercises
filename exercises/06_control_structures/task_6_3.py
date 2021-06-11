@@ -64,3 +64,19 @@ for intf, vlan in access.items():
             print(f" {command} {vlan}")
         else:
             print(f" {command}")
+
+for intf, vlan in trunk.items():
+    print("interface FastEthernet" + intf)
+    for command in trunk_template:
+        if command.endswith("trunk allowed vlan"):
+            if vlan[0] == 'add':
+                action = "add"
+            elif vlan[0] == 'del':
+                action = "remove"
+            elif vlan[0] == 'only':
+                action = ""
+            vlans = ",".join(vlan[1:])
+            #print("{command} {action} {vlans}".format(command=command, action=action, vlans=",".join(vlan[1:])))
+            print(f"{command} {action} {vlans}")
+        else:
+            print(f" {command}")
