@@ -17,3 +17,13 @@
 """
 
 ignore = ["duplex", "alias", "configuration"]
+
+import sys
+file = sys.argv[1]
+with open(file) as f:
+    for line in f:
+        #if not line.startswith("!") and not ignore[0] in line and not ignore[1] in line and not ignore[2] in line:
+        if not line.startswith("!"):
+            words = line.split()
+            if not set(words).intersection(set(ignore)):
+                print(line.rstrip())

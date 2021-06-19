@@ -20,3 +20,9 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+
+
+with open("CAM_table.txt") as f:
+    for line in f:
+        if line.strip() != "" and line.strip()[0].isdigit():
+            print(line.strip())
