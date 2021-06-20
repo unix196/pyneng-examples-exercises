@@ -23,3 +23,21 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+
+tmp_list = []
+with open("CAM_table.txt") as f:
+    for line in f:
+        if line.strip() and line.strip()[0].isdigit():
+            #print(line.strip())
+            words = line.strip().split()
+            words[0] = int(words[0]) # теперь первым эл-им идет число
+            tmp_list.append(words)
+
+mac_template = "{:7} {:<17} {:<12} {}"
+
+for upper_list in sorted(tmp_list):  #Python automatically sorts lists of lists by the first element
+    #print(upper_list)
+    upper_list[0] = str(upper_list[0])
+    print(mac_template.format(upper_list[0],upper_list[1],upper_list[2],upper_list[3]))
+
+#for vlan, mac, dyn, int in sorted(tmp_list):
