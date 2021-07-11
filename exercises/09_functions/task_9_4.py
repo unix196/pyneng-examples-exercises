@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+import os
 """
 Задание 9.4
 
@@ -64,3 +66,28 @@ def ignore_command(command, ignore):
         if word in command:
             ignore_status = True
     return ignore_status
+
+def convert_config_to_dict(path):
+    if os.path.exists(path):
+        with open(path) as f:
+            config_dict = {}
+            command_list = []
+            for line in f:
+                line = line.rstrip()
+                if not line.startswith("!") and line != "":
+                    if not ignore_command(line, ignore):
+                        if not line.startswith(" "):
+                            config_dict_key = line
+                            #print(config_dict_key)
+                            command_list = []
+                        else:
+                            config_dict_value = line.strip()
+                            #print(config_dict_value)
+                            command_list.append(config_dict_value)
+                        config_dict[config_dict_key] = command_list
+
+            return config_dict
+            #print(config_dict.keys())
+            #print(config_dict.values())
+
+convert_config_to_dict("config_sw1.txt")
