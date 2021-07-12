@@ -27,11 +27,11 @@ import os
 """
 
 
-def get_int_vlan_map(path):
-    if os.path.exists(path):
+def get_int_vlan_map(config_filename):
+    if os.path.exists(config_filename):
         access_dict = {}
         trunk_dict = {}
-        with open(path) as f:
+        with open(config_filename) as f:
             for line in f:
                 if line.startswith("interface"):
                     intf = line.strip().split()[-1]

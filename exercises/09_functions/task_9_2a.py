@@ -40,8 +40,8 @@ def generate_trunk_config(intf_vlan_mapping, trunk_template):
     Возвращает список всех портов в режиме trunk с конфигурацией на основе шаблона
     """
     trunk_dict_config = {}
-    trunk_mode_list = []
     for intf, vlans in intf_vlan_mapping.items():
+        trunk_mode_list = []
         #trunk_mode_list.append(f"interface {intf}")
         for i in trunk_template:
             if i.startswith("switchport trunk allowed"):
@@ -51,6 +51,6 @@ def generate_trunk_config(intf_vlan_mapping, trunk_template):
             else:
                 trunk_mode_list.append(i)
         trunk_dict_config[intf] = trunk_mode_list
-    print(trunk_dict_config)
+    return trunk_dict_config
 
-generate_trunk_config(trunk_config,trunk_mode_template)
+print(generate_trunk_config(trunk_config,trunk_mode_template))
