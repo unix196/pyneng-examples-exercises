@@ -74,9 +74,39 @@
 
 """
 
+from task_11_1 import parse_cdp_neighbors
+from task_11_2 import create_network_map
+from draw_network_graph import draw_topology
+from pprint import pprint
+
 infiles = [
     "sh_cdp_n_sw1.txt",
     "sh_cdp_n_r1.txt",
     "sh_cdp_n_r2.txt",
     "sh_cdp_n_r3.txt",
 ]
+
+topology_dict = create_network_map(infiles)
+
+
+def unique_network_map(some_topology):
+    network_map = {}
+    #pprint(some_topology)
+    for key, value in some_topology.items():
+        #print("Key and value: ",key,value)
+        if not network_map.get(value) == key:
+            network_map[key] = value
+            #print("network_map: ",network_map)
+
+        #else:
+        #    print("duplicate: ",key,value)
+    #pprint(network_map)
+    return network_map
+
+
+#pprint(topology_dict)
+network_map = unique_network_map(topology_dict)
+draw_topology(network_map)
+
+if __name__ == "__main__":
+    pprint(create_network_map(infiles))
