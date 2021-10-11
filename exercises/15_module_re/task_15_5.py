@@ -26,3 +26,29 @@ description Connected to SW1 port Eth 0/1
 
 Проверить работу функции на файле sh_cdp_n_sw1.txt.
 """
+
+import re
+from pprint import pprint
+
+def generate_description_from_cdp(filename):
+    description_template = 'description Connected to {} port {}'
+    neighbors_dict = {}
+    with open(filename) as f:
+        for line in f:
+            #match_device = re.search(r'(\S+)>.*',line)
+            #if match_device:
+            #    device = match_device.groups()
+            match = re.search(r'(?P<remote_device>\S+)\s+(?P<local>\S+ \d/\d).*\s+(?P<remote>\S+ \d/\d)', line)
+            if match:
+                remote_device, local_int, remote_int = match.group("remote_device"), match.group("local"), match.group("remote")
+                #print(remote_device, local_int, remote_int)
+                #print(match.groupdict())
+                #print(match.group("device"))
+
+                neighbors_dict[local_int] =  description_template.format(remote_device, remote_int)
+                #return description_template.format(local_int, remote_int)
+        return neighbors_dict
+
+
+if __name__ == "__main__":
+    pprint(generate_description_from_cdp("sh_cdp_n_sw1.txt"))
