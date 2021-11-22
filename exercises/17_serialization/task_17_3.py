@@ -24,3 +24,25 @@ R6           Fa 0/2          143           R S I           2811       Fa 0/0
 
 Проверить работу функции на содержимом файла sh_cdp_n_sw1.txt
 """
+import re
+
+def parse_sh_cdp_neighbors(text):
+    global_neighbors_dict = {}
+    local_if_dict = {}
+    match_device = re.search(r'(\S+)>show cdp neighbors', text)
+    if match_device:
+        device = match_device.group(1)
+    neighbors = re.findall(r'(?P<remote_device>\S+)\s+(?P<local_if>\S+ \S+)\s+\d{3}\s+\S \S \S\s+\d{4}\s+(?P<port>.*)', text)
+    for remote_device, local_if, port in neighbors:
+        remote_device_dict = {}
+        remote_device_dict[remote_device] = port
+        local_if_dict[local_if] = remote_device_dict
+        global_neighbors_dict[device] = local_if_dict
+    return global_neighbors_dict
+
+
+
+if __name__ == "__main__":
+    with open("sh_cdp_n_sw1.txt") as f:
+        text = f.read()
+    print(parse_sh_cdp_neighbors(text))
